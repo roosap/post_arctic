@@ -8,6 +8,10 @@ export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
+export const CREATE_REQUEST = "CREATE_REQUEST";
+export const CREATE_SUCCESS = "CREATE_SUCCESS";
+export const CREATE_FAILURE = "CREATE_FAILURE";
+
 export const VERIFY_REQUEST = "VERIFY_REQUEST";
 export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 
@@ -46,6 +50,24 @@ const requestLogin = () => {
       return {
           type: LOGOUT_FAILURE
       };
+  };
+
+  const requestCreateUser = () => {
+    return {
+      type: CREATE_REQUEST
+    };
+  };
+
+  const receiveCreateUser = () => {
+    return {
+      type: CREATE_SUCCESS
+    };
+  };
+
+  const createUserError = () => {
+    return {
+      type: CREATE_FAILURE
+    };
   };
 
   const verifyRequest = () => {
@@ -87,6 +109,20 @@ const requestLogin = () => {
         dispatch(logoutError());
       });
   };
+
+  export const createUser = (email, password) => dispatch => {
+    dispatch(requestCreateUser());
+    myFirebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        dispatch(receiveCreateUser(user));
+      })
+      .catch(error => {
+        console.log('Error logging in: ', error)
+        dispatch(createUserError());
+      });
+  }
 
   export const verifyAuth = () => dispatch => {
     dispatch(verifyRequest());

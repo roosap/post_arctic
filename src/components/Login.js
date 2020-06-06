@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { loginUser } from "../actions";
+import { createUser } from "../actions";
 
 const Login = (props) => {
 
@@ -18,9 +19,15 @@ const Login = (props) => {
         setPassword(target.value);
     };
 
-    const handleSubmit = () => {
+    const handleSignIn = () => {
         const {dispatch} = props;
         dispatch(loginUser(email, password));
+    }
+
+    const handleSignUp = () => {
+        const {dispatch} = props;
+        dispatch(createUser(email, password));
+        props.history.push('/signup/confirmation');
     }
 
     if (isAuthenticated) {
@@ -28,11 +35,16 @@ const Login = (props) => {
     } else {
         return (
             <div>
-                <h4>Sign In</h4>
-                {loginError && (<h2>Incorrect log-in details</h2>)}
-                <input type='email' name='email' placeholder="Email" onChange={handleEmailChange} />
-                <input type='password' name='password' placeholder="Password" onChange={handlePasswordChange} />
-                <button onClick={handleSubmit}>Sign in</button>
+                <h2>Sign In</h2>
+                {loginError && (<h6>Incorrect log-in details</h6>)}
+                <h6>Existing user?</h6>
+                <input type='email' name='email' placeholder='Email' onChange={handleEmailChange} />
+                <input type='password' name='password' placeholder='Password' onChange={handlePasswordChange} />
+                <button onClick={handleSignIn}>Sign in</button>
+                <h6>New user?</h6>
+                <input type='email' name='email' placeholder='Email' onChange={handleEmailChange} />
+                <input type='password' name='password' placeholder='Password' onChange={handlePasswordChange} />
+                <button onClick={handleSignUp}>Sign up</button>
             </div>
 
        
