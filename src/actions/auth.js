@@ -1,0 +1,1 @@
+import {myFirebase} from "../firebase/firebase";
