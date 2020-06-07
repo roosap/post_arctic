@@ -35,13 +35,13 @@ const Login = (props) => {
     } else {
         return (
             <div>
-                <h2>Sign In</h2>
+                <h2>Post Arctic</h2>
                 {loginError && (<h6>Incorrect log-in details</h6>)}
-                <h6>Existing user?</h6>
+                <h6>Log back in...</h6>
                 <input type='email' name='email' placeholder='Email' onChange={handleEmailChange} />
                 <input type='password' name='password' placeholder='Password' onChange={handlePasswordChange} />
                 <button onClick={handleSignIn}>Sign in</button>
-                <h6>New user?</h6>
+                <h6>...or sign up below</h6>
                 <input type='email' name='email' placeholder='Email' onChange={handleEmailChange} />
                 <input type='password' name='password' placeholder='Password' onChange={handlePasswordChange} />
                 <button onClick={handleSignUp}>Sign up</button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useRef } from 'react';
 import {Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -8,19 +8,34 @@ import Login from "./components/Login";
 import SignUpConfirmation from './components/SignUpConfirmation';
 
 function App(props) {
+
+  const switchRef = useRef(null);
+
+  const handleModeChange = () => {
+    switchRef.current.classList.toggle("light-mode");
+  }
+
   const { isAuthenticated, isVerifying } = props;
   return (
-    <Switch>
-      <ProtectedRoute
-        exact
-        path="/"
-        component={Home}
-        isAuthenticated={isAuthenticated}
-        isVerifying={isVerifying}
-      />
-      <Route path="/login" component={Login} />
-      <Route path='/signup/confirmation' component={SignUpConfirmation} />
-    </Switch>
+    <Fragment>
+      <div ref={switchRef} className="dark-mode">
+        <label className="switch">
+          <input type="checkbox" />
+          <span className="slider round"  onClick={handleModeChange}></span>
+        </label>
+      <Switch>
+        <ProtectedRoute
+          exact
+          path="/"
+          component={Home}
+          isAuthenticated={isAuthenticated}
+          isVerifying={isVerifying}
+        />
+        <Route path="/login" component={Login} />
+        <Route path='/signup/confirmation' component={SignUpConfirmation} />
+      </Switch>
+      </div>
+    </Fragment>
   );
 }
 
